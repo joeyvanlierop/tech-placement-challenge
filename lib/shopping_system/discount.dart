@@ -41,8 +41,6 @@ class DiscountNForPrice extends Discount {
 
   /// Calculates the discounted price by doing the following:
   ///   - Determine the amount of pairs of [n] items there are present.
-  ///       I cheated a little bit here by determining the amount of items within
-  ///       the pairs in order to avoid an unnecessary casting.
   ///   - Calculate the price of the non-discounted items by multiplying the
   ///     [amountNormal] by the items normal price.
   ///   - Calculate the price of the discounted items by multiplying the
@@ -50,12 +48,12 @@ class DiscountNForPrice extends Discount {
   ///   - Return the sum of the discounted and non-discounted prices.
   @override
   double calculatePrice(Item item, int count) {
-    int amountNormal = count % n;
-    int amountDiscounted = count - amountNormal;
+    int amountDiscounted = count ~/ n;
+    int amountNormal = count - amountDiscounted * n;
 
-    double totalDiscounted = amountDiscounted * discountPrice / n;
-    double totalNormal = amountNormal * item.price;
-    double totalPrice = totalDiscounted + totalNormal;
+    double priceDiscounted = amountDiscounted * discountPrice;
+    double priceNormal = amountNormal * item.price;
+    double totalPrice = priceDiscounted + priceNormal;
 
     return totalPrice;
   }
@@ -64,34 +62,73 @@ class DiscountNForPrice extends Discount {
 /// Predefined implementation of a discount.
 ///
 /// Applicable for when the discount is of the format:
-///   "Buy [n] get 1 free"
+///   "Buy [buyN] get [getM] free"
 ///   "Buy 3 get 1 free"
 ///
 /// In order to follow the rules of the UNiDAYS coding challenge, an additional
 /// item is not given if [n] item are purchased. Rather, if an additional item
 /// is purchased after [n] items are purchased, the additional item is free of
 /// charge.
-///
-/// Additionally, "3 for the price of 2" is also of this format. It can be
-/// described in other words as "Buy 2 get 1 free".
-class DiscountBuyNGet1 extends Discount {
-  /// The amount of items required to obtain an additional free item
-  final int n;
+class DiscountBuyNGetM extends Discount {
+  /// The amount of items required to obtain [getM] free items
+  final int buyN;
 
-  DiscountBuyNGet1(this.n) : super(description: 'Buy $n Get 1 Free');
+  /// The amount of items received free of charge once [buyN] is attained
+  final int getM;
+
+  DiscountBuyNGetM(this.buyN, this.getM)
+      : super(description: 'Buy $buyN Get $getM Free');
 
   /// Calculates the discounted price by doing the following:
-  ///   - Determine the amount of pairs of [n] + 1 items there are present.
-  ///       The reason it is [n] + 1 is because the discount is not applied
-  ///       until an additional item is added to the basket.
-  ///   - Calculate the price of the discounted items by multiplying the
-  ///   items normal price by the total [count] of items subtracted by the
-  ///   [freeItemCount].
+  ///   - Iterate over the item count until [buyN] items is reached
+  ///     - During each iteration, sum the items price
+  ///   - Once [buyN] is reached, the next [getM] items are skipped
+  ///
+  /// This might be able to be revised so that it functions in constant time,
+  /// however this iterative approach is quite concise and works very well.
   @override
   double calculatePrice(Item item, int count) {
-    int freeItemCount = (count / (n + 1)).floor();
+    double totalPrice = 0;
 
-    double totalPrice = item.price * (count - freeItemCount);
+    for (int i = 0; i < count; i++) {
+      totalPrice += item.price;
+
+      if (i % buyN == 0) {
+        i += getM;
+      }
+    }
+
+    return totalPrice;
+  }
+}
+
+/// Predefined implementation of a discount.
+///
+/// Applicable for when the discount is of the format:
+///   "Buy [buyN] for the price of [forM]"
+///   "Buy 3 for the price of 2"
+class DiscountNForM extends Discount {
+  /// The amount of items required to be eligible for the discount
+  final int buyN;
+
+  /// The price for [buyN] items
+  final int forM;
+
+  DiscountNForM(this.buyN, this.forM)
+      : super(description: 'Buy $buyN For The Price Of $forM');
+
+  /// Calculates the discounted price by doing the following:
+  ///   - Determine how many groups of [buyN] items there are
+  ///   - Recalculate the amount of items by subtracting the original count
+  ///   by the amount of [buyN] item groups there are
+  ///     - [forM] is taken into account at this point
+  double calculatePrice(Item item, int count) {
+    int groupsOfN = count ~/ buyN;
+    int amountNormal = count - groupsOfN * buyN;
+    int amountDiscounted = groupsOfN * forM;
+
+    int totalAmount = amountNormal + amountDiscounted;
+    double totalPrice = totalAmount * item.price;
 
     return totalPrice;
   }

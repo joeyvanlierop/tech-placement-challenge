@@ -78,7 +78,7 @@ class Basket with ChangeNotifier {
   /// [calculatePrice()].
   double calculateDelivery([double price]) {
     double deliveryPrice = 0;
-    price ??= calculateTotalPrice();
+    price ??= calculatePrice();
 
     if (price > 0 && price < deliveryThreshold) {
       deliveryPrice = deliveryCharge;
