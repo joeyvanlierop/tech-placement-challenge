@@ -8,7 +8,7 @@ List<Item> itemList = [
   Item('A', 8),
   Item('B', 12, DiscountNForPrice(2, 20)),
   Item('C', 4, DiscountNForPrice(3, 10)),
-  Item('D', 7, DiscountBuyNGetM(1, 2)),
+  Item('D', 7, DiscountBuyNGetM(1, 1)),
   Item('E', 5, DiscountNForM(3, 2)),
 ];
 
