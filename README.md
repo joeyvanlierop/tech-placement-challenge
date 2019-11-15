@@ -16,8 +16,11 @@ In order to build and run the app, you can try following the instructions [here]
 
 Or you can simply install the latest apk from the [releases](https://github.com/joeyvanlierop/tech-placement-challenge/releases).
 
----
+## Showcase
 
+  <img src="showcase/showcase.gif" width="225">
+
+---
 
 # UNiDAYS Discounts Coding Challenge
 
