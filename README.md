@@ -4,9 +4,13 @@ This app is designed for the UNiDAYS Discounts Coding Challenge. It is powered b
 
 ## Introduction
 
-In order to complete this challenge, I experimented with implementing the [strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern). This can be explored in the [discount.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/discount.dart) file. Although I am unsure if I implemented the design pattern perfectly, everything functions quite well and the system should be very flexible for future expansion. More specific documentation is included in [basket.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/basket.dart), [discount.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/discount.dart), and [item.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/item.dart).
+In order to complete this challenge, I experimented with implementing the [strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern). This can be explored in the [discount.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/discount.dart) file. The strategy pattern allowed for each unique discount to implement a custom algorithm which can be applied to any item and easily adjusted. This worked very well as it allowed for flexiblity of the discount objects, and makes future expansion trivial. 
 
-In order for the shopping system to communicate with the frontend, I utilized the [provider pattern](https://pub.dev/packages/provider). This was originally implemented using the [bloc pattern](https://pub.dev/packages/bloc), however provider ended up being much cleaner.
+This project includes 3 pre-made discount classes including: [DiscountNForPrice](https://github.com/joeyvanlierop/tech-placement-challenge/blob/1880ae0b808b986d4ea5bf29f5f43b4b38db2181/lib/shopping_system/discount.dart#L30), [DiscountBuyNGetM](https://github.com/joeyvanlierop/tech-placement-challenge/blob/1880ae0b808b986d4ea5bf29f5f43b4b38db2181/lib/shopping_system/discount.dart#L72), and [DiscountNForM](https://github.com/joeyvanlierop/tech-placement-challenge/blob/1880ae0b808b986d4ea5bf29f5f43b4b38db2181/lib/shopping_system/discount.dart#L110) 
+
+More specific documentation is included in [basket.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/basket.dart), [discount.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/discount.dart), and [item.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/item.dart).
+
+In order connect the shopping system business logic with the user interface, I utilized [provider pattern](https://pub.dev/packages/provider). This was originally implemented using the [bloc pattern](https://pub.dev/packages/bloc), however provider ended up being much cleaner and resulted in less boilerplate code.
 
 ## Building The App
 
