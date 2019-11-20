@@ -10,7 +10,7 @@ This project includes 3 pre-made discount classes including: [DiscountNForPrice]
 
 More specific documentation is included in [basket.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/basket.dart), [discount.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/discount.dart), and [item.dart](https://github.com/joeyvanlierop/tech-placement-challenge/blob/master/lib/shopping_system/item.dart).
 
-In order connect the shopping system business logic with the user interface, I utilized [provider pattern](https://pub.dev/packages/provider). This was originally implemented using the [bloc pattern](https://pub.dev/packages/bloc), however provider ended up being much cleaner and resulted in less boilerplate code.
+In order connect the shopping system business logic with the user interface, I utilized [provider pattern](https://pub.dev/packages/provider). This was originally implemented using the [bloc pattern](https://pub.dev/packages/bloc), however provider ended up being the surperior solution as the state (a basket object) was not mutable. Also, because this is a smaller-scale project, BLoC resulted in an excess of boilerplate code.
 
 ## Building The App
 
